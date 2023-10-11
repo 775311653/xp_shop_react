@@ -3,8 +3,14 @@
     height: 140px;
     padding: 10px 80px;
 
-    .title {
+    .titleBox {
       margin-top: 26px;
+
+      .title{
+        color: var(--primary-blue-500, #322C87);
+        line-height: 20px; /* 142.857% */
+        letter-spacing: 0.7px;
+      }
     }
   }
 

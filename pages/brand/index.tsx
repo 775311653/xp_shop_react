@@ -52,7 +52,7 @@ let Brand = observer(() => {
     return (
         <div className={css.container}>
             <div className={css.topBox}>
-                <span className={css.title}>首页</span>/
+                <div className={css.titleBox}><span className={css.title}>首页</span>/</div>
             </div>
             <Image src={'/brand/banner.png'} alt="" width={1440} height={400} className={css.banner}
                    objectFit={'scale-down'}/>
