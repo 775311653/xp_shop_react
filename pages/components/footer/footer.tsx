@@ -8,7 +8,7 @@ import api from "@/api";
 import css from './footer.module.scss';
 import cartPng from '@/public/brand/cart.png';
 import Image from "next/image";
-import {Link} from "@mui/material";
+import Link from "_next@12.3.4@next/link";
 
 let commonUtils = require("@/utils/Common.js");
 let queryParams = {};
@@ -46,21 +46,21 @@ let Brand = observer(() => {
                 <div>
                     <div>
                         <div>SHOPPING</div>
-                        <Link href={'/'}><a>購物須知</a></Link>
-                        <Link href={'/'}><a>常見問題Q&A</a></Link>
-                        <Link href={'/'}><a>優惠碼使用規則</a></Link>
+                        <Link href={'/'}><a className={'link'}>購物須知</a></Link>
+                        <Link href={'/'}><a className={'link'}>常見問題Q&A</a></Link>
+                        <Link href={'/'}><a className={'link'}>優惠碼使用規則</a></Link>
                     </div>
                     <div>
                         <div>CUSTOMER</div>
-                        <Link href={'/'}><a>會員制度說明</a></Link>
-                        <Link href={'/'}><a>隱私權政策</a></Link>
-                        <Link href={'/'}><a>合作聯繫homchoo</a></Link>
+                        <Link href={'/'}><a className={'link'}>會員制度說明</a></Link>
+                        <Link href={'/'}><a className={'link'}>隱私權政策</a></Link>
+                        <Link href={'/'}><a className={'link'}>合作聯繫homchoo</a></Link>
                     </div>
                     <div>
                         <div>FOLLOWUS</div>
-                        <Link href={'/'}><a>Facebook</a></Link>
-                        <Link href={'/'}><a>Instagram</a></Link>
-                        <Link href={'/'}><a>Line@</a></Link>
+                        <Link href={'/'}><a className={'link'}>Facebook</a></Link>
+                        <Link href={'/'}><a className={'link'}>Instagram</a></Link>
+                        <Link href={'/'}><a className={'link'}>Line@</a></Link>
                     </div>
                 </div>
             </div>
