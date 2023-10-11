@@ -5,7 +5,7 @@ import {useHistory, useLocation} from "react-router-dom";
 import {useEffect} from "react";
 import {useRouter} from 'next/router';
 import api from "@/api";
-
+import css from './brand.module.scss';
 
 let commonUtils = require("@/utils/Common.js");
 let queryParams = {};
@@ -48,12 +48,12 @@ let Brand = observer(() => {
     }, []);
 
     return (
-        <div>
+        <div className={css.container}>
             {/*<div>Brand</div>*/}
             {/*<div>cart_list :{JSON.stringify(data.cart_list[0])}</div>*/}
             {/*<div>cart count :{data.cart_total}</div>*/}
-            <div>
-
+            <div className={css.fontTest}>
+                aaaaaaaaaa
             </div>
         </div>
     )
