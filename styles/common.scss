@@ -1,3 +1,130 @@
-div{
-  //color: rebeccapurple;
+html{
+  .bold {
+    font-weight: bold;
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  .underline {
+    text-decoration: underline;
+  }
+
+  .greyBtn {
+    background: rgb(199, 199, 199) 10000%;
+    color: black;
+    font-size: 18px;
+    height: 40px;
+    border-radius: 6px;
+    padding: 5px 20px;
+  }
+
+  .greyBtnBold {
+    background: rgb(199, 199, 199) 10000%;
+    color: black;
+    font-size: 18px;
+    height: 40px;
+    border-radius: 6px;
+    padding: 5px 20px;
+    font-weight: bold;
+  }
+
+  .whiteBtn {
+    border: 1px solid #000;
+    font-size: 18px;
+    height: 40px;
+    border-radius: 6px;
+    padding: 0px 20px;
+  }
+
+  //酒红色
+  .wineRed {
+    color: rgba(146, 7, 132, 100);
+  }
+
+  .red {
+    color: red;
+  }
+
+  //深蓝色
+  .darkBlue {
+    color: rgba(18, 43, 136, 100);
+  }
+
+  //浅蓝色
+  .lightBlue {
+    color: #1515FF;
+  }
+
+  //注释用灰色
+  .hint {
+    font-size: 14px;
+    text-align: justify;
+  }
+
+  //注释用灰色
+  .hintGray {
+    color: rgba(128, 128, 128, 100);
+    font-size: 14px;
+    text-align: justify;
+  }
+
+  //注释用灰色
+  .hintGrayItalic {
+    color: rgba(128, 128, 128, 100);
+    font-size: 14px;
+    font-style: italic;
+  }
+
+  .gray {
+    background: rgba(128, 128, 128, 100);
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+
+  .ant-radio-inner {
+    border-width: 2px;
+    border-color: rgba(128, 128, 128, 100);
+  }
+
+  .ant-radio-inner::after {
+    //top: 2px;
+    //left: 2px;
+  }
+
+  .flexGrow1 {
+    display: flex;
+    flex-grow: 1;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+  }
+
+  .mustEdit {
+    margin-right: 4px;
+
+  }
+
+  .font18 {
+    font-size: 18px;
+  }
+
+  .font20 {
+    font-size: 20px;
+  }
+
+  .font28 {
+    font-size: 28px;
+  }
+
+  .link {
+    color: #1890ff;
+    cursor: pointer;
+  }
 }
