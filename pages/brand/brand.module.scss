@@ -1,7 +1,70 @@
-.container{
+.container {
+  .topBox {
+    height: 140px;
+    padding: 10px 80px;
 
-  .fontTest{
-    color: rebeccapurple;
+    .title {
+      margin-top: 26px;
+    }
+  }
+
+  .banner {
+
+  }
+
+  .productListBox {
+    padding: 24px 80px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+
+    .productCardBox {
+
+      .imgItem {
+        object-fit: cover;
+      }
+
+      .descBox {
+        padding: 10px;
+
+        .productName {
+          font-size: 16px;
+          color: var(--gray-800-paragraph, #373F50);
+          font-weight: 700;
+          line-height: 24px; /* 150% */
+          letter-spacing: 0.8px;
+        }
+
+        .brandName {
+          color: var(--gray-600-text-muted, #7D879C);
+          font-weight: 700;
+          line-height: 20px; /* 142.857% */
+          letter-spacing: 0.7px;
+          margin-top: 30px;
+        }
+
+        .priceBox {
+          margin-top: 12px;
+
+          .realPrice {
+            color: var(--gray-800-paragraph, #373F50);
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px; /* 150% */
+            letter-spacing: 0.8px;
+          }
+
+          .rawPrice {
+            color: var(--gray-600-text-muted, #7D879C);
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 16px; /* 133.333% */
+            letter-spacing: 0.6px;
+            text-decoration-line: strikethrough;
+          }
+        }
+      }
+    }
   }
 }
 

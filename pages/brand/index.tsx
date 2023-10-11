@@ -6,6 +6,8 @@ import {useEffect} from "react";
 import {useRouter} from 'next/router';
 import api from "@/api";
 import css from './brand.module.scss';
+import Image from "next/image";
+import {Card} from "@mui/material";
 
 let commonUtils = require("@/utils/Common.js");
 let queryParams = {};
@@ -49,11 +51,33 @@ let Brand = observer(() => {
 
     return (
         <div className={css.container}>
-            {/*<div>Brand</div>*/}
-            {/*<div>cart_list :{JSON.stringify(data.cart_list[0])}</div>*/}
-            {/*<div>cart count :{data.cart_total}</div>*/}
-            <div className={css.fontTest}>
-                aaaaaaaaaa
+            <div className={css.topBox}>
+                <span className={css.title}>首页</span>/
+            </div>
+            <Image src={'/brand/banner.png'} alt="" width={1440} height={400} className={css.banner}
+                   objectFit={'scale-down'}/>
+            <div className={css.productListBox}>
+                {
+                    data.product_list.map((item: any, index) => {
+                        return (
+                            <Card key={item} className={css.productCardBox}>
+                                <img src={item.main_img_url} alt="" width={302} height={280} className={css.imgItem}/>
+                                <div className={css.descBox}>
+                                    <div className={css.productName}>{item.name}</div>
+                                    <div className={css.brandName}>{item?.brand?.name}</div>
+                                    <div className={css.priceBox}>
+                                        <span className={css.realPrice}>NT${item.real_price}</span>
+                                        {
+                                            item.raw_price ? (
+                                                <span className={css.rawPrice}>NT${item.raw_price}</span>
+                                            ) : null
+                                        }
+                                    </div>
+                                </div>
+                            </Card>
+                        )
+                    })
+                }
             </div>
         </div>
     )
