@@ -35,36 +35,36 @@ let Brand = observer(() => {
 
     return (
         <div className={css.container}>
-            <div>
-                <div>homchoo.com 關於家的想像 唯有獨一無二的記憶</div>
-                <div>
+            <div className={css.title1}>homchoo.com 關於家的想像 唯有獨一無二的記憶</div>
+            <div className={css.middleBox}>
+                <div className={css.firstBox}>
                     <div>地址：台中市南屯區文心南路39號</div>
                     <div>Email：service@homchoo.com</div>
                     <div>連絡電話：04-24966116</div>
                 </div>
                 <div className={'flexGrow1'}></div>
-                <div>
-                    <div>
-                        <div>SHOPPING</div>
-                        <Link href={'/'}><a className={'link'}>購物須知</a></Link>
-                        <Link href={'/'}><a className={'link'}>常見問題Q&A</a></Link>
-                        <Link href={'/'}><a className={'link'}>優惠碼使用規則</a></Link>
-                    </div>
-                    <div>
-                        <div>CUSTOMER</div>
-                        <Link href={'/'}><a className={'link'}>會員制度說明</a></Link>
-                        <Link href={'/'}><a className={'link'}>隱私權政策</a></Link>
-                        <Link href={'/'}><a className={'link'}>合作聯繫homchoo</a></Link>
-                    </div>
-                    <div>
-                        <div>FOLLOWUS</div>
-                        <Link href={'/'}><a className={'link'}>Facebook</a></Link>
-                        <Link href={'/'}><a className={'link'}>Instagram</a></Link>
-                        <Link href={'/'}><a className={'link'}>Line@</a></Link>
-                    </div>
+                <div className={css.menuBox}>
+                    <div className={css.title}>SHOPPING</div>
+                    <Link href={'/'}><a className={css.desc}>購物須知</a></Link>
+                    <Link href={'/'}><a className={css.desc}>常見問題Q&A</a></Link>
+                    <Link href={'/'}><a className={css.desc}>優惠碼使用規則</a></Link>
+                </div>
+                <div className={css.menuBox}>
+                    <div className={css.title}>CUSTOMER</div>
+                    <Link href={'/'}><a className={css.desc}>會員制度說明</a></Link>
+                    <Link href={'/'}><a className={css.desc}>隱私權政策</a></Link>
+                    <Link href={'/'}><a className={css.desc}>合作聯繫homchoo</a></Link>
+                </div>
+                <div className={css.menuBox}>
+                    <div className={css.title}>FOLLOWUS</div>
+                    <Link href={'/'}><a className={css.desc}>Facebook</a></Link>
+                    <Link href={'/'}><a className={css.desc}>Instagram</a></Link>
+                    <Link href={'/'}><a className={css.desc}>Line@</a></Link>
                 </div>
             </div>
-            <div>版權所有 © homchoo | 觀境設計股份有限公司 FISHBONE Design Co., Ltd. All rights reserved.</div>
+            <div className={css.companyInfo}>版權所有 © homchoo | 觀境設計股份有限公司 FISHBONE Design Co., Ltd. All
+                rights reserved.
+            </div>
         </div>
     )
 });

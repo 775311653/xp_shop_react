@@ -10,8 +10,7 @@ import '@fontsource/roboto/700.css';
 
 import createEmotionCache from '../utility/createEmotionCache';
 import lightThemeOptions from '../styles/theme/lightThemeOptions';
-import '../styles/globals.css';
-import '../styles/common.scss';
+import '../styles/globals.scss';
 import Header from "@/pages/components/header/header";
 import css from './app.module.scss';
 import Footer from "@/pages/components/footer/footer";

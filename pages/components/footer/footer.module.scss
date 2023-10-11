@@ -5,13 +5,48 @@
   height: 240px;
   padding: 20px 80px;
 
-  .title1{
+  .title1 {
     color: var(--primary-blue-500, #322C87);
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
     letter-spacing: 0.8px;
+  }
+
+  .middleBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    .firstBox {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .menuBox {
+      display: flex;
+      flex-direction: column;
+      width: calc((100% - 300px) / 3);
+      max-width: 200px;
+
+      .title {
+        margin-bottom: 4px;
+        font-weight: bold;
+      }
+
+      .desc {
+        margin-top: 12px;
+      }
+    }
+  }
+
+  .companyInfo {
+    margin: auto;
+    font-size: 12px;
   }
 }
 
