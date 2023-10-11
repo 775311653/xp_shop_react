@@ -14,6 +14,7 @@ let router;
 let data = observable({
     cart_list: [],
     cart_total: 0,
+    product_list: [],
 });
 
 async function get_shop_cart_list() {
@@ -24,8 +25,16 @@ async function get_shop_cart_list() {
     data.cart_total = res.result.total;
 }
 
+async function get_product_list() {
+    let res = await api.product.get_product_list();
+    if (res.code !== 0) return;
+
+    data.product_list = res.result.data;
+}
+
 function init(queryParams: {}) {
     get_shop_cart_list();
+    get_product_list();
 }
 
 let Brand = observer(() => {
@@ -40,9 +49,12 @@ let Brand = observer(() => {
 
     return (
         <div>
-            <div>Brand</div>
-            <div>cart_list :{JSON.stringify(data.cart_list[0])}</div>
-            <div>cart count :{data.cart_total}</div>
+            {/*<div>Brand</div>*/}
+            {/*<div>cart_list :{JSON.stringify(data.cart_list[0])}</div>*/}
+            {/*<div>cart count :{data.cart_total}</div>*/}
+            <div>
+
+            </div>
         </div>
     )
 });
