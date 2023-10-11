@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background: var(--primary-pink-500, #EACDD4);
+  height: 240px;
+  padding: 20px 80px;
+
+  .title1{
+    color: var(--primary-blue-500, #322C87);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.8px;
+  }
+}
+
+

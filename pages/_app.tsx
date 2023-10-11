@@ -14,6 +14,7 @@ import '../styles/globals.css';
 import '../styles/common.scss';
 import Header from "@/pages/components/header/header";
 import css from './app.module.scss';
+import Footer from "@/pages/components/footer/footer";
 
 interface MyAppProps extends AppProps {
     emotionCache?: EmotionCache;
@@ -33,6 +34,7 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
                 <div className={css.appContainer}>
                     <Header/>
                     <Component {...pageProps} />
+                    <Footer/>
                 </div>
             </ThemeProvider>
         </CacheProvider>
