@@ -11,6 +11,7 @@ import {Card, MenuItem, Select} from "@mui/material";
 import NumberInput from "@/pages/components/numberInput/numberInput";
 import Button from "@mui/material/Button";
 import {Big} from "big.js";
+import Message from "@/pages/components/message/message";
 
 let commonUtils = require("@/utils/Common.js");
 let queryParams: any = {};
@@ -21,9 +22,10 @@ let data: any = observable({
     cart_total: 0,
     product_list: [],
     product_detail: {},
+    unit_price: 0,
+    product_specification: {},//用户选择的产品规格组合
     form_data: {
         spec_options: new Set(),
-        unit_price: 0,
         quantity: 1,
         total_price: 0,
     },
@@ -69,7 +71,7 @@ async function on_change_specification_option(select_spec_option: any) {
     data.form_data.spec_options.add(select_spec_option);
 
     //通过用户选择的规格选项，找到对应的价格，在product_specifications中找，符合用户选择的规格选项的价格，只能是一样的
-    data.unit_price = data.product_detail.product_specifications.find((item: any) => {
+    data.product_specification = data.product_detail.product_specifications.find((item: any) => {
         console.log('item.specification_option_ids', JSON.parse(JSON.stringify(item.specification_option_ids)), JSON.parse(JSON.stringify(data.form_data.spec_options)));
         if (item.specification_option_ids.length !== data.form_data.spec_options.size) {
             return false;
@@ -83,7 +85,8 @@ async function on_change_specification_option(select_spec_option: any) {
             }
         }
         return true;
-    })?.price ?? 0;
+    });
+    data.unit_price = data.product_specification?.price ?? 0;
     data.form_data.total_price = new Big(data.unit_price).mul(data.form_data.quantity).toFixed(2);
 }
 
@@ -93,14 +96,16 @@ async function on_change_quantity(quantity: any) {
 }
 
 async function add_shop_cart() {
-    // let res = await api.user.add_shop_cart({
-    //     product_id: queryParams.id,
-    //     quantity: data.form_data.quantity,
-    //     spec_options: data.form_data.spec_options,
-    // });
-    // if (res.code !== 0) return;
-    //
-    // get_shop_cart_list();
+    let res = await api.user.add_shop_cart({
+        product_id: queryParams.id,
+        count: data.form_data.quantity,
+        product_specification_id: data.product_specification.id,
+    });
+    if (res.code !== 0) return;
+
+    Message.info('加入购物车成功');
+
+    get_shop_cart_list();
 }
 
 function init(queryParams: {}) {
@@ -186,7 +191,7 @@ let Brand = observer(() => {
                             on_change_quantity(count)
                         }}/>
                 </div>
-                <Button variant="contained" className={css.addCartBtn}>
+                <Button variant="contained" className={css.addCartBtn} onClick={add_shop_cart}>
                     <Image src={'/productDetail/whiteShopCart.svg'} alt="" width={20} height={20}/>
                     加入購物車
                 </Button>
