@@ -14,6 +14,7 @@
   .cartBox {
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 
     .number {
       font-size: 12px;
@@ -29,6 +30,7 @@
 
     .imgBox {
       margin-right: 80px;
+
       .imgItem {
         width: 12px;
         height: 12px;

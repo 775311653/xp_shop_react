@@ -53,10 +53,16 @@ let Brand = observer(() => {
         <div className={css.container}>
             <span className={css.title}>标题</span>
             <div className={'flexGrow1'}></div>
-            <div className={css.cartBox}>
-                <div className={css.number}>12</div>
+            <div className={css.cartBox} onClick={() => {
+                router.push('/shopCart');
+            }}>
+                {
+                    data.cart_total > 0 ? (
+                        <div className={css.number}>{data.cart_total}</div>
+                    ) : null
+                }
                 <div className={css.imgBox}>
-                    <Image src={'/brand/cart.png'} alt="" width={24} height={24} className={css.imgItem} />
+                    <Image src={'/brand/cart.png'} alt="" width={24} height={24} className={css.imgItem}/>
                 </div>
             </div>
         </div>

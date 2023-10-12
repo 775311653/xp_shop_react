@@ -4,6 +4,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {observable} from "mobx";
+import {useLocalObservable} from 'mobx-react-lite';
+
 
 import {useHistory, useLocation} from "react-router-dom";
 import {useEffect} from "react";
@@ -22,24 +24,21 @@ let commonUtils = require("@/utils/Common.js");
 let queryParams = {};
 let history;
 let router;
-let data = observable({
-    value: 0,
-    increment() {
-        this.value += 1;
-    },
-
-    decrement() {
-        //最小值为1
-        if (this.value <= 1) return;
-        this.value -= 1;
-    },
-
-    setValue(newValue: number) {
-        this.value = newValue;
-    },
-});
 
 const NumberInput: React.FC<NumberInputProps> = observer(({onChange, defaultValue = 0}) => {
+    const data = useLocalObservable(() => ({
+        value: defaultValue,
+        increment() {
+            this.value += 1;
+        },
+        decrement() {
+            if (this.value <= 1) return;
+            this.value -= 1;
+        },
+        setValue(newValue: number) {
+            this.value = newValue;
+        }
+    }));
     const handleValueChange = (newValue: number) => {
         data.setValue(newValue);
         if (onChange) {
@@ -49,7 +48,7 @@ const NumberInput: React.FC<NumberInputProps> = observer(({onChange, defaultValu
 
     useEffect(() => {
         handleValueChange(defaultValue);
-    }, []);
+    }, [defaultValue]);
 
     return (
         <Box display="flex" alignItems="center">
