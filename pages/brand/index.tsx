@@ -60,7 +60,9 @@ let Brand = observer(() => {
                 {
                     data.product_list.map((item: any, index) => {
                         return (
-                            <Card key={item} className={css.productCardBox}>
+                            <Card key={item} className={css.productCardBox} onClick={()=>{
+                                router.push(`/productDetail/${item.id}`);
+                            }}>
                                 <img src={item.main_img_url} alt="" width={302} height={280} className={css.imgItem}/>
                                 <div className={css.descBox}>
                                     <div className={css.productName}>{item.name}</div>
