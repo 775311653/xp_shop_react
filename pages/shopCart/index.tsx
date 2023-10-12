@@ -52,6 +52,7 @@ async function refreshAllPrice() {
 }
 
 async function onChangeShopCartCount(item: any, count: number) {
+    if (item.count === count) return;
     let res = await api.user.update_shop_cart({id: item.id, count: count});
     if (res.code !== 0) return;
 
@@ -134,7 +135,7 @@ let ShopCart = observer(() => {
                         <Button variant="contained" color="primary"
                                 className={css.btnBuy}
                                 onClick={() => {
-                                     router.push('/brand');
+                                    router.push('/brand');
                                 }}>
                             <Image src={'/productDetail/whiteShopCart.svg'} alt="" width={20} height={20}
                                    className={css.imgItem}/>
