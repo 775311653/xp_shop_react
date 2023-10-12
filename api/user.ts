@@ -12,6 +12,10 @@ let userApi = {
     update_shop_cart(params: any = {}): Promise<any> {
         params.user_id = localStorage.getItem('user_id') ?? 1;
         return axios.patch(`/shopCart/${params.id}`, params);
+    },
+    delete_shop_cart(params: any = {}): Promise<any> {
+        params.user_id = localStorage.getItem('user_id') ?? 1;
+        return axios.delete(`/shopCart/${params.id}`, {params});
     }
 }
 

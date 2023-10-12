@@ -59,6 +59,14 @@ async function onChangeShopCartCount(item: any, count: number) {
     get_shop_cart_list();
 }
 
+async function delete_shop_cart(item: any) {
+    let res = await api.user.delete_shop_cart({id: item.id});
+    if (res.code !== 0) return;
+
+    Message.success("刪除成功");
+    get_shop_cart_list();
+}
+
 function init(queryParams: {}) {
     get_shop_cart_list();
 }
@@ -81,11 +89,11 @@ function menuLayout(step: number, type: string) {
             break;
     }
     return (
-        <div>
-            <div>{step}</div>
-            <div>
-                <div>{titleEN}</div>
-                <div>{titleCN}</div>
+        <div className={css.menuItem}>
+            <div className={css.numCircle}>{step}</div>
+            <div className={css.menuTitleBox}>
+                <div className={css.titleEn}>{titleEN}</div>
+                <div className={css.titleCN}>{titleCN}</div>
             </div>
             {
                 step != 3 ? (
@@ -108,7 +116,7 @@ let ShopCart = observer(() => {
 
     return (
         <div className={css.container}>
-            <div>
+            <div className={css.menuBox}>
                 {[
                     {step: 1, type: 'select'},
                     {step: 2, type: 'unSelect'},
@@ -119,60 +127,75 @@ let ShopCart = observer(() => {
             </div>
             <div>
                 {commonUtils.isEmpty(data.cart_list) ? (
-                    <div>
-                        <Image src={'/brand/cart.png'} alt="" width={40} height={40} className={css.imgItem}/>
-                        <div>購物車內尚無商品，趕快去選購吧！</div>
-                        <Button variant="contained" color="primary" onClick={() => {
-                            history.push('/productList');
-                        }}>
-                            <div>
-                                <Image src={'/productDetail/whiteShopCart.svg'} alt="" width={20} height={20}
-                                       className={css.imgItem}/>
-                                去選購
-                            </div>
+                    <Card className={css.noDataBox}>
+                        <div className={'flexGrow1'}></div>
+                        <img src={'/brand/cart.png'} alt="" width={40} height={40} className={css.centerImg}/>
+                        <div className={css.title}>購物車內尚無商品，趕快去選購吧！</div>
+                        <Button variant="contained" color="primary"
+                                className={css.btnBuy}
+                                onClick={() => {
+                                     router.push('/brand');
+                                }}>
+                            <Image src={'/productDetail/whiteShopCart.svg'} alt="" width={20} height={20}
+                                   className={css.imgItem}/>
+                            去選購
                         </Button>
-                    </div>
+                    </Card>
                 ) : (
-                    <div>
+                    <div className={css.middleBox}>
                         {data.cart_list.map((shop_cart: any, index) => {
                             return (
-                                <Card key={index} className={css.card}>
+                                <Card key={index} className={css.shopCartItem}>
                                     <img src={shop_cart.product.main_img_url} alt="" width={141} height={141}
                                          className={css.imgItem}/>
-                                    <div className={css.leftBox}>
-                                        <div className={css.title}>{shop_cart.product.name}</div>
-                                        <div>
-                                            {shop_cart.product.raw_price ? (
-                                                <div>NT${shop_cart.product.raw_price}</div>
-                                            ) : null}
-                                            <div>NT${shop_cart.productSpecification.price} x {shop_cart.count}</div>
-                                            <div>NT${Big(shop_cart.productSpecification.price).mul(shop_cart.count).toFixed(2)}</div>
+                                    <div className={css.contentBox}>
+                                        <div className={css.leftBox}>
+                                            <div className={css.title}>{shop_cart.product.name}</div>
+                                            <div
+                                                className={css.specTitle}>{shop_cart.specOptions.map((option: any, index: number) => {
+                                                return `${option.specification.name} ${option.value}${index === shop_cart.specOptions.length - 1 ? '' : ', '}`
+                                            })}</div>
+
+                                            <div className={'flexGrow1'}></div>
+                                            <div className={css.priceBox}>
+                                                {shop_cart.product.raw_price ? (
+                                                    <div className={css.rawPrice}>NT${shop_cart.product.raw_price}</div>
+                                                ) : null}
+                                                <div
+                                                    className={css.realPrice}>NT${shop_cart.productSpecification.price} x {shop_cart.count}</div>
+                                                <div
+                                                    className={css.sumPrice}>NT${Big(shop_cart.productSpecification.price).mul(shop_cart.count).toFixed(2)}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className={'flexGrow1'}></div>
-                                    <div>
-                                        <Image src={'/shopCart/close.svg'} alt="" width={16} height={16}
-                                               className={css.imgItem}/>
-                                        <NumberInput key={shop_cart.id} defaultValue={shop_cart.count}
-                                                     onChange={(count) => {
-                                                         onChangeShopCartCount(shop_cart, count);
-                                                     }}/>
+                                        <div className={'flexGrow1'}></div>
+                                        <div className={css.rightBox}>
+                                            <div className={css.closeImg} onClick={() => {
+                                                delete_shop_cart(shop_cart);
+                                            }}>
+                                                <Image src={'/shopCart/close.svg'} alt="" width={16} height={16}/>
+                                            </div>
+                                            <div className={'flexGrow1'}></div>
+                                            <NumberInput key={shop_cart.id} defaultValue={shop_cart.count}
+                                                         onChange={(count) => {
+                                                             onChangeShopCartCount(shop_cart, count);
+                                                         }}/>
+                                        </div>
                                     </div>
                                 </Card>
                             )
                         })}
-                        <div>
-                            <Card>
-                                <div>總計</div>
-                                <div>{data.all_price}</div>
+                        <div className={css.sumBox}>
+                            <Card className={css.cardSum}>
+                                <div className={css.title}>總計</div>
+                                <div className={css.price}>NT${data.all_price}</div>
                             </Card>
-                            <Button variant="contained" color="primary" onClick={() => {
-                                Message.info("結帳去");
-                            }}>
-                                <div>
-                                    <Image src={'/productDetail/whiteShopCart.svg'} alt="" width={20} height={20}/>
-                                    結帳去
-                                </div>
+                            <Button variant="contained" color="primary"
+                                    className={css.btnPay}
+                                    onClick={() => {
+                                        Message.info("結帳去");
+                                    }}>
+                                <Image src={'/productDetail/whiteShopCart.svg'} alt="" width={20} height={20}/>
+                                結帳去
                             </Button>
                         </div>
                     </div>
