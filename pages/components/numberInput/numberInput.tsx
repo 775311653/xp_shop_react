@@ -13,6 +13,11 @@ import css from './numberInput.module.scss';
 import cartPng from '@/public/brand/cart.png';
 import Image from "next/image";
 
+interface NumberInputProps {
+    onChange?: (value: number) => void;
+    defaultValue?: number;
+}
+
 let commonUtils = require("@/utils/Common.js");
 let queryParams = {};
 let history;
@@ -24,6 +29,8 @@ let data = observable({
     },
 
     decrement() {
+        //最小值为1
+        if (this.value <= 1) return;
         this.value -= 1;
     },
 
@@ -31,12 +38,29 @@ let data = observable({
         this.value = newValue;
     },
 });
-const NumberInput = observer(() => {
+
+const NumberInput: React.FC<NumberInputProps> = observer(({onChange, defaultValue = 0}) => {
+    const handleValueChange = (newValue: number) => {
+        data.setValue(newValue);
+        if (onChange) {
+            onChange(newValue); // 调用传入的回调函数
+        }
+    };
+
+    useEffect(() => {
+        handleValueChange(defaultValue);
+    }, []);
+
     return (
         <Box display="flex" alignItems="center">
             <Button
                 variant="outlined"
-                onClick={() => data.decrement()}
+                onClick={() => {
+                    data.decrement();
+                    if (onChange) {
+                        onChange(data.value);
+                    }
+                }}
             >
                 -
             </Button>
@@ -44,7 +68,12 @@ const NumberInput = observer(() => {
             <TextField
                 type="number"
                 value={data.value}
-                onChange={e => data.setValue(Number(e.target.value))}
+                inputProps={{
+                    min: 1,
+                    max: 999,
+                }}
+                onChange={e => handleValueChange(Number(e.target.value))}
+                defaultValue={defaultValue}
                 variant="standard"
                 style={{
                     marginLeft: 10,
@@ -55,7 +84,12 @@ const NumberInput = observer(() => {
 
             <Button
                 variant="contained"
-                onClick={() => data.increment()}
+                onClick={() => {
+                    data.increment();
+                    if (onChange) {
+                        onChange(data.value);
+                    }
+                }}
             >
                 +
             </Button>

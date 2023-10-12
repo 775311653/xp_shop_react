@@ -10,6 +10,7 @@ import Image from "next/image";
 import {Card, MenuItem, Select} from "@mui/material";
 import NumberInput from "@/pages/components/numberInput/numberInput";
 import Button from "@mui/material/Button";
+import {Big} from "big.js";
 
 let commonUtils = require("@/utils/Common.js");
 let queryParams: any = {};
@@ -21,7 +22,10 @@ let data: any = observable({
     product_list: [],
     product_detail: {},
     form_data: {
-        specifications: [],
+        spec_options: new Set(),
+        unit_price: 0,
+        quantity: 1,
+        total_price: 0,
     },
 });
 
@@ -46,6 +50,57 @@ async function get_product_detail() {
     if (res.code !== 0) return;
 
     data.product_detail = res.result;
+    data.product_detail.specifications.forEach((item: any) => {
+        on_change_specification_option(item.options[0]);
+    });
+
+}
+
+async function on_change_specification_option(select_spec_option: any) {
+    // let select_spec_option = e.target.value;
+    // 同一个规格，只能选择一个规格选项
+    // 1. 先删除同一个规格下的所有规格选项
+    data.form_data.spec_options.forEach((item: any) => {
+        console.log('item.specificationId', item, select_spec_option);
+        if (item.specificationId == select_spec_option.specificationId) {
+            data.form_data.spec_options.delete(item);
+        }
+    });
+    data.form_data.spec_options.add(select_spec_option);
+
+    //通过用户选择的规格选项，找到对应的价格，在product_specifications中找，符合用户选择的规格选项的价格，只能是一样的
+    data.unit_price = data.product_detail.product_specifications.find((item: any) => {
+        console.log('item.specification_option_ids', JSON.parse(JSON.stringify(item.specification_option_ids)), JSON.parse(JSON.stringify(data.form_data.spec_options)));
+        if (item.specification_option_ids.length !== data.form_data.spec_options.size) {
+            return false;
+        }
+        let spec_option_ids = Array.from(data.form_data.spec_options).map((item: any) => {
+            return Number(item.id)
+        });
+        for (const spec_option_id of item.specification_option_ids) {
+            if (!spec_option_ids.includes(spec_option_id)) {
+                return false;
+            }
+        }
+        return true;
+    })?.price ?? 0;
+    data.form_data.total_price = new Big(data.unit_price).mul(data.form_data.quantity).toFixed(2);
+}
+
+async function on_change_quantity(quantity: any) {
+    data.form_data.quantity = quantity;
+    data.form_data.total_price = new Big(data.unit_price).mul(data.form_data.quantity).toFixed(2);
+}
+
+async function add_shop_cart() {
+    // let res = await api.user.add_shop_cart({
+    //     product_id: queryParams.id,
+    //     quantity: data.form_data.quantity,
+    //     spec_options: data.form_data.spec_options,
+    // });
+    // if (res.code !== 0) return;
+    //
+    // get_shop_cart_list();
 }
 
 function init(queryParams: {}) {
@@ -102,14 +157,18 @@ let Brand = observer(() => {
                                         },
                                         height: '40px',
                                     }}
-                                    value={item.options[0].id}
-                                    onChange={(value) => {
-                                        data.form_data.specifications[item.id] = value;
+                                    defaultValue={item.options[0]}
+                                    onChange={(e) => {
+                                        // let option_id = e.target.value;
+                                        // let option = item.options.find((item: any) => {
+                                        //     return item.id == option_id;
+                                        // });
+                                        on_change_specification_option(e.target.value);
                                     }}>
                                     {
-                                        item.options?.map((item: any) => {
+                                        item.options?.map((option: any) => {
                                             return (
-                                                <MenuItem key={item} value={item.id}>{item.value}</MenuItem>
+                                                <MenuItem key={option.id} value={option}>{option.value}</MenuItem>
                                             )
                                         })
                                     }
@@ -120,8 +179,12 @@ let Brand = observer(() => {
                 }
                 <div className={css.rawPrice}>NT${data.product_detail.raw_price}</div>
                 <div className={css.priceBox}>
-                    <div className={css.price}>NT${data.product_detail.real_price}</div>
-                    <NumberInput/>
+                    <div className={css.price}>NT${data.form_data.total_price}</div>
+                    <NumberInput
+                        defaultValue={data.form_data.quantity}
+                        onChange={(count) => {
+                            on_change_quantity(count)
+                        }}/>
                 </div>
                 <Button variant="contained" className={css.addCartBtn}>
                     <Image src={'/productDetail/whiteShopCart.svg'} alt="" width={20} height={20}/>
