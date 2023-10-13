@@ -50,4 +50,24 @@
   }
 }
 
+@media only screen and (max-width: 600px) {
+
+  .container {
+    padding: 5px;
+    .middleBox {
+      flex-direction: row;
+
+      .firstBox {
+        margin-bottom: 20px;
+        justify-content: start;
+      }
+
+      .menuBox{
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
 
