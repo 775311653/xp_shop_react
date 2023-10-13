@@ -6,12 +6,21 @@
     .titleBox {
       margin-top: 26px;
 
-      .title{
+      .title {
         color: var(--primary-blue-500, #322C87);
         line-height: 20px; /* 142.857% */
         letter-spacing: 0.7px;
       }
     }
+  }
+
+  .searchBox {
+    padding: 8px 16px;
+  }
+
+  .selectBox {
+    width: calc(100% - 30px);
+    margin: 22px 15px;
   }
 
   .banner {
@@ -28,6 +37,8 @@
 
       .imgItem {
         object-fit: cover;
+        width: 302px;
+        height: 280px;
       }
 
       .descBox {
@@ -58,6 +69,7 @@
             font-weight: 700;
             line-height: 24px; /* 150% */
             letter-spacing: 0.8px;
+            margin-right: 5px;
           }
 
           .rawPrice {
@@ -74,4 +86,45 @@
   }
 }
 
+//手机端
+@media only screen and (max-width: 600px) {
+  .container {
+    .productListBox {
+      padding: 20px 16px;
+      display: grid;
+      grid-template-columns:1fr 1fr;
+      //grid-template-columns: repeat(auto-fill, minmax(46%, 1fr));  /* 200px 是单个项目的最小宽度 */
 
+
+      .productCardBox {
+        //width: 164px;
+        //max-width: 25%;
+
+        .imgItem {
+          //width: 164px;
+          width: 100%;
+          height: auto;
+        }
+
+        .descBox {
+          .productName {
+            margin-bottom: 30px;
+            font-size: 14px;
+          }
+
+          .brandName {
+            margin-top: 0px;
+            font-size: 12px;
+          }
+        }
+
+        .priceBox {
+          .realPrice {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+}

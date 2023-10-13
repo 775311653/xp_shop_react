@@ -7,7 +7,7 @@ import {useLocalObservable} from 'mobx-react-lite';
 import css from './searchInput.module.scss';
 
 // @ts-ignore
-const SearchInput = observer(({onSearchInput}) => {
+const SearchInput = observer(({onSearchInput,className}) => {
     const data = useLocalObservable(() => ({
         inputValue: "",
     }));
@@ -24,7 +24,7 @@ const SearchInput = observer(({onSearchInput}) => {
     };
 
     return (
-        <div>
+        <div className={className}>
             <TextField
                 value={data.inputValue}
                 onChange={handleInputChange}

@@ -9,6 +9,7 @@ import css from './brand.module.scss';
 import Image from "next/image";
 import {Card, Hidden} from "@mui/material";
 import SearchInput from "@/pages/components/searchButton/searchInput";
+import {MenuItem, Select} from "_@mui_material@5.14.13@@mui/material";
 
 let commonUtils = require("@/utils/Common.js");
 let queryParams: any = {
@@ -16,10 +17,18 @@ let queryParams: any = {
 };
 let history;
 let router;
-let data = observable({
+let data: any = observable({
     cart_list: [],
     cart_total: 0,
     product_list: [],
+    sort_array: [{
+        label: '依價格多到少排序',
+        value: 'DESC',
+    }, {
+        label: '依價格少到多排序',
+        value: 'ASC',
+    }],
+    form_data: {},
 });
 
 async function get_shop_cart_list() {
@@ -64,22 +73,50 @@ let Brand = observer(() => {
                 <Image src={'/brand/banner.png'} alt="" width={1440} height={400} className={css.banner}
                        objectFit={'scale-down'}/>
             </Hidden>
-            <Hidden mdUp>
-                <SearchInput onSearchInput={(searchStr: any) => {
-                    get_product_list({product_name: searchStr})
+            <Hidden smUp>
+                <SearchInput className={css.searchBox} onSearchInput={(searchStr: any) => {
+                    data.form_data.product_name = searchStr;
+                    get_product_list(data.form_data);
                 }}/>
+                <Select
+                    sx={{
+                        height: '40px',
+                    }}
+                    className={css.selectBox}
+                    defaultValue={data.sort_array[0].value}>
+                    {
+                        data.sort_array?.map((sort: any) => {
+                            return (
+                                <MenuItem
+                                    key={sort.label}
+                                    value={sort.value}
+                                    onClick={() => {
+                                        data.form_data.real_price_sort = sort.value;
+                                        get_product_list(data.form_data);
+                                    }}
+                                >{sort.label}</MenuItem>
+                            )
+                        })
+                    }
+                </Select>
             </Hidden>
             <div className={css.productListBox}>
                 {
-                    data.product_list.map((item: any, index) => {
+                    data.product_list.map((item: any) => {
                         return (
                             <Card key={item} className={css.productCardBox} onClick={() => {
                                 router.push(`/productDetail/${item.id}`);
                             }}>
-                                <img src={item.main_img_url} alt="" width={302} height={280} className={css.imgItem}/>
+                                <img src={item.main_img_url} alt="" className={css.imgItem}/>
                                 <div className={css.descBox}>
-                                    <div className={css.productName}>{item.name}</div>
-                                    <div className={css.brandName}>{item?.brand?.name}</div>
+                                    <Hidden smDown>
+                                        <div className={css.productName}>{item.name}</div>
+                                        <div className={css.brandName}>{item?.brand?.name}</div>
+                                    </Hidden>
+                                    <Hidden smUp>
+                                        <div className={css.brandName}>{item?.brand?.name}</div>
+                                        <div className={css.productName}>{item.name}</div>
+                                    </Hidden>
                                     <div className={css.priceBox}>
                                         <span className={css.realPrice}>NT${item.real_price}</span>
                                         {
