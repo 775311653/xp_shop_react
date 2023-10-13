@@ -3,8 +3,6 @@
   flex-direction: column;
   background: #F8F8F8;
 
-
-
   .menuBox {
     margin: 54px auto 66px auto;
     display: flex;
@@ -208,6 +206,56 @@
       }
     }
 
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    padding: 0 10px;
+
+    .menuBox {
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: nowrap;
+      margin: 20px auto 20px auto;
+    }
+
+    .noDataBox {
+    }
+
+    .middleBox {
+      padding: 0;
+
+      .shopCartItem {
+        display: flex;
+
+        .imgItem {
+          max-width: 100px;
+          width: auto;
+          height: auto;
+        }
+
+        .contentBox {
+          display: flex;
+          flex-direction: column;
+          padding: 10px 0px;
+          margin-left: 10px;
+
+          .leftBox {
+            margin-left: 0px;
+          }
+
+          .rightBox {
+            margin-top: 10px;
+          }
+
+        }
+
+        .closeImg {
+          padding: 10px;
+        }
+      }
+    }
   }
 }
 

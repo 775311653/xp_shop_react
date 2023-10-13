@@ -7,7 +7,7 @@ import {useRouter} from 'next/router';
 import api from "@/api";
 import css from './shopCart.module.scss';
 import Image from "next/image";
-import {Button, Card} from "@mui/material";
+import {Button, Card, Hidden} from "@mui/material";
 import {Big} from "big.js";
 import NumberInput from "@/pages/components/numberInput/numberInput";
 import Message from "@/pages/components/message/message";
@@ -127,7 +127,7 @@ let ShopCart = observer(() => {
                 })}
             </div>
             <div>
-                {commonUtils.isEmpty(data.cart_list) ? (
+                {!commonUtils.isEmpty(data.cart_list) ? (
                     <Card className={css.noDataBox}>
                         <div className={'flexGrow1'}></div>
                         <img src={'/brand/cart.png'} alt="" width={40} height={40} className={css.centerImg}/>
@@ -170,11 +170,13 @@ let ShopCart = observer(() => {
                                         </div>
                                         <div className={'flexGrow1'}></div>
                                         <div className={css.rightBox}>
-                                            <div className={css.closeImg} onClick={() => {
-                                                delete_shop_cart(shop_cart);
-                                            }}>
-                                                <Image src={'/shopCart/close.svg'} alt="" width={16} height={16}/>
-                                            </div>
+                                            <Hidden smDown>
+                                                <div className={css.closeImg} onClick={() => {
+                                                    delete_shop_cart(shop_cart);
+                                                }}>
+                                                    <Image src={'/shopCart/close.svg'} alt="" width={16} height={16}/>
+                                                </div>
+                                            </Hidden>
                                             <div className={'flexGrow1'}></div>
                                             <NumberInput key={shop_cart.id} defaultValue={shop_cart.count}
                                                          onChange={(count) => {
@@ -182,6 +184,13 @@ let ShopCart = observer(() => {
                                                          }}/>
                                         </div>
                                     </div>
+                                    <Hidden smUp>
+                                        <div className={css.closeImg} onClick={() => {
+                                            delete_shop_cart(shop_cart);
+                                        }}>
+                                            <Image src={'/shopCart/close.svg'} alt="" width={16} height={16}/>
+                                        </div>
+                                    </Hidden>
                                 </Card>
                             )
                         })}
