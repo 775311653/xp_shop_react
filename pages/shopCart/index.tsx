@@ -21,6 +21,7 @@ let data = observable({
     cart_total: 0,
     product_list: [],
     all_price: 0,
+    choose_step: 1,//1:選擇商品 2:填寫運送資料 3:購物完成
 });
 
 async function get_shop_cart_list() {
@@ -91,14 +92,14 @@ function menuLayout(step: number, type: string) {
     }
     return (
         <div className={css.menuItem}>
-            <div className={css.numCircle}>{step}</div>
+            <div className={step <= data.choose_step ? css.numCircle : css.unSelectNumCircle}>{step}</div>
             <div className={css.menuTitleBox}>
-                <div className={css.titleEn}>{titleEN}</div>
-                <div className={css.titleCN}>{titleCN}</div>
+                <div className={step <= data.choose_step ? css.titleEn : css.unSelectTitleEn}>{titleEN}</div>
+                <div className={step <= data.choose_step ? css.titleCN : css.unSelectTitleCN}>{titleCN}</div>
             </div>
             {
                 step != 3 ? (
-                    <div className={css.line}></div>
+                    <div className={step <= data.choose_step ? css.line : css.unSelectLine}></div>
                 ) : null
             }
         </div>

@@ -31,6 +31,11 @@
         justify-content: center;
       }
 
+      .unSelectNumCircle {
+        @extend .numCircle;
+        background-color: var(--black-alpha-500, rgba(0, 0, 0, 0.36));
+      }
+
       .menuTitleBox {
         .titleEn {
           color: var(--primary-blue-500, #322C87);
@@ -41,6 +46,15 @@
         .titleCN {
           @extend .titleEn;
         }
+
+        .unSelectTitleEn {
+          @extend .titleEn;
+          color: var(--black-alpha-500, rgba(0, 0, 0, 0.36));
+        }
+
+        .unSelectTitleCN {
+          @extend .unSelectTitleEn;
+        }
       }
 
       .line {
@@ -48,6 +62,11 @@
         height: 1px;
         background-color: var(--primary-blue-500, #322C87);
         margin: 0 10px;
+      }
+
+      .unSelectLine {
+        @extend .line;
+        background-color: var(--black-alpha-500, rgba(0, 0, 0, 0.36));
       }
     }
   }
