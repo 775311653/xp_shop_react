@@ -127,7 +127,7 @@ let ShopCart = observer(() => {
                 })}
             </div>
             <div>
-                {!commonUtils.isEmpty(data.cart_list) ? (
+                {commonUtils.isEmpty(data.cart_list) ? (
                     <Card className={css.noDataBox}>
                         <div className={'flexGrow1'}></div>
                         <img src={'/brand/cart.png'} alt="" width={40} height={40} className={css.centerImg}/>
