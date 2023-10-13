@@ -12,6 +12,7 @@ import NumberInput from "@/pages/components/numberInput/numberInput";
 import Button from "@mui/material/Button";
 import {Big} from "big.js";
 import Message from "@/pages/components/message/message";
+import ProductCard from "@/pages/components/productCard/productCard";
 
 let commonUtils = require("@/utils/Common.js");
 let queryParams: any = {};
@@ -29,6 +30,7 @@ let data: any = observable({
         quantity: 1,
         total_price: 0,
     },
+    maybe_like_product_list: [],
 });
 
 async function get_shop_cart_list() {
@@ -55,6 +57,13 @@ async function get_product_detail() {
     data.product_detail.specifications.forEach((item: any) => {
         on_change_specification_option(item.options[0]);
     });
+
+    let tag_ids = data.product_detail?.tags.map((item: any) => {
+        return item.id
+    });
+    let res2 = await api.product.get_product_list({tag_ids: tag_ids});
+    if (res2.code !== 0) return;
+    data.maybe_like_product_list = res2.result.data;
 
 }
 
@@ -132,94 +141,115 @@ let Brand = observer(() => {
     }
     return (
         <div className={css.container}>
-            <Hidden smDown>
-                <div className={css.leftBox}>
-                    {data.product_detail.img_urls?.map((item: any) => {
-                        return (
-                            <img src={item} key={item} alt="" width={628} height={628} className={css.imgItem}/>
-                        )
-                    })}
-                </div>
-            </Hidden>
-            <div className={css.rightBox}>
-                <div className={css.menuName}>首頁 / {data.product_detail.brand.name} /
-                    <span className={'bold'}>{data.product_detail.name}</span></div>
-                <Hidden smUp>
-                    <div>
-                        <img src={data.product_detail.main_img_url} alt="" className={css.imgItem}/>
+            <div className={css.productContainer}>
+                <Hidden smDown>
+                    <div className={css.leftBox}>
+                        {data.product_detail.img_urls?.map((item: any) => {
+                            return (
+                                <img src={item} key={item} alt="" width={628} height={628} className={css.imgItem}/>
+                            )
+                        })}
                     </div>
                 </Hidden>
-                <div className={css.productName}>{data.product_detail.name}</div>
-                <div className={css.num000}>0000000000</div>
-                <div className={css.brandName}>Brand品牌｜{data.product_detail.brand.name}</div>
-                <div className={css.introTitle1}>｜產品介紹｜</div>
-                <div className={css.intro}>{data.product_detail.intro}</div>
-                <div className={css.readMore}>閱讀更多</div>
-                <div className={css.deliveryDate}>Expected delivery 預計出貨日｜<span>7~14</span>天</div>
-                {
-                    data.product_detail.specifications?.map((item: any) => {
-                        return (
-                            <div key={item.id} className={css.specBox}>
-                                <div className={css.specTitle}>{item.name}</div>
-                                <Select
-                                    sx={{
-                                        width: {
-                                            xs: '200px',
-                                            sm: '302px',
-                                        },
-                                        height: '40px',
-                                    }}
-                                    defaultValue={item.options[0]}
-                                    onChange={(e) => {
-                                        // let option_id = e.target.value;
-                                        // let option = item.options.find((item: any) => {
-                                        //     return item.id == option_id;
-                                        // });
-                                        on_change_specification_option(e.target.value);
-                                    }}>
-                                    {
-                                        item.options?.map((option: any) => {
-                                            return (
-                                                <MenuItem key={option.id} value={option}>{option.value}</MenuItem>
-                                            )
-                                        })
-                                    }
-                                </Select>
-                            </div>
-                        )
-                    })
-                }
-                <div className={css.rawPrice}>NT${data.product_detail.raw_price}</div>
-                <div className={css.priceBox}>
-                    <div className={css.price}>NT${data.form_data.total_price}</div>
-                    <NumberInput
-                        defaultValue={data.form_data.quantity}
-                        onChange={(count) => {
-                            on_change_quantity(count)
-                        }}/>
+                <div className={css.rightBox}>
+                    <div className={css.menuName}>首頁 / {data.product_detail.brand.name} /
+                        <span className={'bold'}>{data.product_detail.name}</span></div>
+                    <Hidden smUp>
+                        <div>
+                            <img src={data.product_detail.main_img_url} alt="" className={css.imgItem}/>
+                        </div>
+                    </Hidden>
+                    <div className={css.productName}>{data.product_detail.name}</div>
+                    <div className={css.num000}>0000000000</div>
+                    <div className={css.brandName}>Brand品牌｜{data.product_detail.brand.name}</div>
+                    <div className={css.introTitle1}>｜產品介紹｜</div>
+                    <div className={css.intro}>{data.product_detail.intro}</div>
+                    <div className={css.readMore}>閱讀更多</div>
+                    <div className={css.deliveryDate}>Expected delivery 預計出貨日｜<span>7~14</span>天</div>
+                    {
+                        data.product_detail.specifications?.map((item: any) => {
+                            return (
+                                <div key={item.id} className={css.specBox}>
+                                    <div className={css.specTitle}>{item.name}</div>
+                                    <Select
+                                        sx={{
+                                            width: {
+                                                xs: '200px',
+                                                sm: '302px',
+                                            },
+                                            height: '40px',
+                                        }}
+                                        defaultValue={item.options[0]}
+                                        onChange={(e) => {
+                                            // let option_id = e.target.value;
+                                            // let option = item.options.find((item: any) => {
+                                            //     return item.id == option_id;
+                                            // });
+                                            on_change_specification_option(e.target.value);
+                                        }}>
+                                        {
+                                            item.options?.map((option: any) => {
+                                                return (
+                                                    <MenuItem key={option.id} value={option}>{option.value}</MenuItem>
+                                                )
+                                            })
+                                        }
+                                    </Select>
+                                </div>
+                            )
+                        })
+                    }
+                    <div className={css.rawPrice}>NT${data.product_detail.raw_price}</div>
+                    <div className={css.priceBox}>
+                        <div className={css.price}>NT${data.form_data.total_price}</div>
+                        <NumberInput
+                            defaultValue={data.form_data.quantity}
+                            onChange={(count) => {
+                                on_change_quantity(count)
+                            }}/>
+                    </div>
+                    <Button variant="contained" className={css.addCartBtn} onClick={add_shop_cart}>
+                        <Image src={'/productDetail/whiteShopCart.svg'} alt="" width={20} height={20}/>
+                        加入購物車
+                    </Button>
+                    <div className={css.tagBox}>
+                        {data.product_detail.tags?.map((item: any) => {
+                            return (
+                                <div key={item.id} className={css.tag}>#{item.name}</div>
+                            )
+                        })}
+                    </div>
+                    <div className={css.prodDescTitle}>商品簡介</div>
+                    <div className={css.line}></div>
+                    <div className={css.prodDesc}>{data.product_detail.detail}</div>
+                    <Hidden smUp>
+                        {data.product_detail.img_urls?.map((item: any) => {
+                            return (
+                                <img src={item} key={item} alt="" width={628} height={628} className={css.imgItem}/>
+                            )
+                        })}
+                    </Hidden>
                 </div>
-                <Button variant="contained" className={css.addCartBtn} onClick={add_shop_cart}>
-                    <Image src={'/productDetail/whiteShopCart.svg'} alt="" width={20} height={20}/>
-                    加入購物車
-                </Button>
-                <div className={css.tagBox}>
-                    {data.product_detail.tags?.map((item: any) => {
-                        return (
-                            <div key={item.id} className={css.tag}>#{item.name}</div>
-                        )
-                    })}
-                </div>
-                <div className={css.prodDescTitle}>商品簡介</div>
-                <div className={css.line}></div>
-                <div className={css.prodDesc}>{data.product_detail.detail}</div>
-                <Hidden smUp>
-                    {data.product_detail.img_urls?.map((item: any) => {
-                        return (
-                            <img src={item} key={item} alt="" width={628} height={628} className={css.imgItem}/>
-                        )
-                    })}
-                </Hidden>
             </div>
+            <Hidden smDown>
+                <div className={css.like}>
+                    YOU MAY ALSO LIKE 你也許喜歡
+                </div>
+                <div style={{overflow:'hidden'}}>
+                    <div className={css.mayBeLikeList}>
+                        {
+                            data.maybe_like_product_list.slice(0, 6).map((item: any) => {
+                                return (
+                                    <ProductCard key={item.id} productData={item} className={css.itemCard}/>
+
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+
+
+            </Hidden>
         </div>
     )
 });

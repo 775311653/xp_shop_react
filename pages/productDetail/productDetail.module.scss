@@ -2,203 +2,235 @@
 
 .container {
   display: flex;
+  flex-direction: column;
   padding: 95px 80px;
 
-  .leftBox {
-    width: 50%;
-    height: 100%;
+  .productContainer {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
-    .imgItem {
-      width: 100%;
-      height: auto;
-      max-width: 628px;
-      margin-bottom: 10px;
-      object-fit: cover;
-    }
-  }
-
-  .rightBox {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    margin-left: 80px;
-
-    .menuName {
-      color: var(--primary-blue-500, #322C87);
-      line-height: 20px; /* 142.857% */
-      letter-spacing: 0.7px;
-      margin-bottom: 32px;
-      font-size: 14px;
-    }
-
-    .productName {
-      color: var(--gray-900-text-color, #2B3445);
-      font-weight: 700;
-      @extend .font24;
-      line-height: 36px; /* 150% */
-      letter-spacing: 1.2px;
-    }
-
-    .num000 {
-      color: var(--gray-600-text-muted, #7D879C);
-      @extend .font16;
-      line-height: 24px; /* 150% */
-      letter-spacing: 0.8px;
-      margin-bottom: 32px;
-    }
-
-    .brandName {
-      color: var(--primary-blue-500, #322C87);
-      @extend .font16;
-      font-weight: 700;
-      line-height: 24px; /* 150% */
-      letter-spacing: 0.8px;
-      margin-bottom: 16px;
-    }
-
-    .introTitle {
-      color: var(--gray-600-text-muted, #7D879C);
-      @extend .font16;
-      line-height: 24px; /* 150% */
-      letter-spacing: 0.8px;
-    }
-
-    .introTitle1 {
-      @extend .introTitle;
-      margin-bottom: 10px;
-    }
-
-    .intro {
-      @extend .introTitle;
-      margin-left: 5px;
-    }
-
-    .readMore {
-      color: var(--gray-600-text-muted, #7D879C);
-      line-height: 20px; /* 142.857% */
-      letter-spacing: 0.7px;
-      align-self: flex-end;
-    }
-
-    .deliveryDate {
-      @extend .introTitle;
-      margin-bottom: 32px;
-      margin-top: 10px;
-    }
-
-    .specBox {
+    .leftBox {
+      width: 50%;
+      height: 100%;
       display: flex;
       flex-direction: column;
-      margin-bottom: 24px;
-
-      .specTitle {
-        margin-bottom: 6px;
-      }
-
-      .valueSelect {
-        max-width: 302px;
-        height: 40px;
-
-      }
-    }
-
-    .rawPrice {
-      @extend .introTitle;
-      text-decoration: line-through;
-      margin: 8px 0 10px 0;
-    }
-
-    .priceBox {
-      display: flex;
-      flex-direction: row;
+      justify-content: center;
       align-items: center;
-      flex-wrap: wrap;
 
-      .price {
+      .imgItem {
+        width: 100%;
+        height: auto;
+        max-width: 628px;
+        margin-bottom: 10px;
+        object-fit: cover;
+      }
+    }
+
+    .rightBox {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      margin-left: 80px;
+
+      .menuName {
         color: var(--primary-blue-500, #322C87);
-        @extend .font28;
+        line-height: 20px; /* 142.857% */
+        letter-spacing: 0.7px;
+        margin-bottom: 32px;
+        font-size: 14px;
+      }
+
+      .productName {
+        color: var(--gray-900-text-color, #2B3445);
         font-weight: 700;
-        line-height: 40px; /* 142.857% */
-        letter-spacing: 1.4px;
-        margin-right: 55px;
+        @extend .font24;
+        line-height: 36px; /* 150% */
+        letter-spacing: 1.2px;
       }
 
-      .numberInputBox {
-        margin-left: 20px;
+      .num000 {
+        color: var(--gray-600-text-muted, #7D879C);
+        @extend .font16;
+        line-height: 24px; /* 150% */
+        letter-spacing: 0.8px;
+        margin-bottom: 32px;
       }
-    }
 
-    .addCartBtn {
-      width: 100%;
-      max-width: 302px;
-      height: auto;
-      max-height: 48px;
-      margin: 32px 0;
-    }
+      .brandName {
+        color: var(--primary-blue-500, #322C87);
+        @extend .font16;
+        font-weight: 700;
+        line-height: 24px; /* 150% */
+        letter-spacing: 0.8px;
+        margin-bottom: 16px;
+      }
 
-    .tagBox {
-      margin-bottom: 28px;
+      .introTitle {
+        color: var(--gray-600-text-muted, #7D879C);
+        @extend .font16;
+        line-height: 24px; /* 150% */
+        letter-spacing: 0.8px;
+      }
 
-      .tag {
-        border-radius: 3px;
-        border: 1px solid var(--gray-300-border-light, #D8E0E9);
-        background: var(--white, #FFF);
-        padding: 4px 12px;
-
+      .introTitle1 {
         @extend .introTitle;
+        margin-bottom: 10px;
+      }
+
+      .intro {
+        @extend .introTitle;
+        margin-left: 5px;
+      }
+
+      .readMore {
+        color: var(--gray-600-text-muted, #7D879C);
+        line-height: 20px; /* 142.857% */
+        letter-spacing: 0.7px;
+        align-self: flex-end;
+      }
+
+      .deliveryDate {
+        @extend .introTitle;
+        margin-bottom: 32px;
+        margin-top: 10px;
+      }
+
+      .specBox {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+
+        .specTitle {
+          margin-bottom: 6px;
+        }
+
+        .valueSelect {
+          max-width: 302px;
+          height: 40px;
+
+        }
+      }
+
+      .rawPrice {
+        @extend .introTitle;
+        text-decoration: line-through;
+        margin: 8px 0 10px 0;
+      }
+
+      .priceBox {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .price {
+          color: var(--primary-blue-500, #322C87);
+          @extend .font28;
+          font-weight: 700;
+          line-height: 40px; /* 142.857% */
+          letter-spacing: 1.4px;
+          margin-right: 55px;
+        }
+
+        .numberInputBox {
+          margin-left: 20px;
+        }
+      }
+
+      .addCartBtn {
+        width: 100%;
+        max-width: 302px;
+        height: auto;
+        max-height: 48px;
+        margin: 32px 0;
+      }
+
+      .tagBox {
+        margin-bottom: 28px;
+
+        .tag {
+          border-radius: 3px;
+          border: 1px solid var(--gray-300-border-light, #D8E0E9);
+          background: var(--white, #FFF);
+          padding: 4px 12px;
+
+          @extend .introTitle;
+        }
+      }
+
+      .prodDescTitle {
+        color: var(--primary-blue-500, #322C87);
+        @extend .font16;
+        font-weight: 700;
+        line-height: 24px; /* 150% */
+        letter-spacing: 0.8px;
+        margin: auto;
+      }
+
+      .line {
+        max-width: 628px;
+        width: 100%;
+        height: 2px;
+        background: #D8E0E9;
+        margin-top: 10px;
+      }
+
+      .prodDesc {
+        color: var(--gray-800-paragraph, #373F50);
+        @extend .font16;
+        line-height: 24px; /* 150% */
+        letter-spacing: 0.8px;
+        padding: 24px 16px;
       }
     }
 
-    .prodDescTitle {
-      color: var(--primary-blue-500, #322C87);
-      @extend .font16;
-      font-weight: 700;
-      line-height: 24px; /* 150% */
-      letter-spacing: 0.8px;
-      margin: auto;
-    }
-
-    .line {
-      max-width: 628px;
-      width: 100%;
-      height: 2px;
-      background: #D8E0E9;
-      margin-top: 10px;
-    }
-
-    .prodDesc {
-      color: var(--gray-800-paragraph, #373F50);
-      @extend .font16;
-      line-height: 24px; /* 150% */
-      letter-spacing: 0.8px;
-      padding: 24px 16px;
-    }
   }
 
+  .like {
+    color: var(--gray-600-text-muted, #7D879C);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    letter-spacing: 0.8px;
+    margin: 40px 0 16px 0;
+  }
+
+  .mayBeLikeList {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    //overflow-x: auto;
+
+    .itemCard {
+      width: 200px;
+      margin-right: 20px;
+      height: auto;
+
+    }
+  }
 }
 
 @media only screen and (max-width: 600px) {
   .container {
-    padding: 15px 24px;
+    .productContainer {
+      padding: 15px 24px;
 
-    .leftBox {
-    }
+      .leftBox {
+      }
 
-    .rightBox {
-      width: auto;
-      margin-left: 0;
+      .rightBox {
+        width: auto;
+        margin-left: 0;
 
-      .imgItem {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 24px;
+        .imgItem {
+          max-width: 100%;
+          height: auto;
+          margin-bottom: 24px;
+        }
       }
     }
   }
