@@ -1,0 +1,74 @@
+// 定义桌面端的字体大小
+$font28: 28px;
+$font24: 24px;
+$font20: 20px;
+$font18: 18px;
+$font16: 16px;
+$font14: 14px;
+// ... 添加其他字体大小
+
+// 定义移动端的字体大小
+$mobile-font28: 24px; // 比桌面端小 4px
+$mobile-font24: 20px;
+$mobile-font20: 16px;
+$mobile-font18: 14px;
+$mobile-font16: 14px; // 比桌面端小 2px
+$mobile-font14: 12px;
+// ... 添加其他字体大小
+
+$breakpoint: 600px;
+
+.font28 {
+  font-size: $font28;
+
+  // 当屏幕宽度小于 $breakpoint 时
+  @media only screen and (max-width: $breakpoint) {
+    font-size: $mobile-font28;
+  }
+}
+
+.font24 {
+  font-size: $font24;
+
+  // 当屏幕宽度小于 $breakpoint 时
+  @media only screen and (max-width: $breakpoint) {
+    font-size: $mobile-font24;
+  }
+}
+
+.font20 {
+  font-size: $font20;
+
+  // 当屏幕宽度小于 $breakpoint 时
+  @media only screen and (max-width: $breakpoint) {
+    font-size: $mobile-font20;
+  }
+}
+
+.font18 {
+  font-size: $font18;
+
+  // 当屏幕宽度小于 $breakpoint 时
+  @media only screen and (max-width: $breakpoint) {
+    font-size: $mobile-font18;
+  }
+}
+
+.font16 {
+  font-size: $font16;
+
+  // 当屏幕宽度小于 $breakpoint 时
+  @media only screen and (max-width: $breakpoint) {
+    font-size: $mobile-font16;
+  }
+}
+
+.font14 {
+  font-size: $font14;
+
+  @media only screen and (max-width: $breakpoint) {
+    font-size: $mobile-font14;
+  }
+}
+
+// ... 为其他字体大小添加类

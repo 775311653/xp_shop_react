@@ -7,7 +7,7 @@ import {useRouter} from 'next/router';
 import api from "@/api";
 import css from './productDetail.module.scss';
 import Image from "next/image";
-import {Card, MenuItem, Select} from "@mui/material";
+import {Card, Hidden, MenuItem, Select} from "@mui/material";
 import NumberInput from "@/pages/components/numberInput/numberInput";
 import Button from "@mui/material/Button";
 import {Big} from "big.js";
@@ -132,16 +132,23 @@ let Brand = observer(() => {
     }
     return (
         <div className={css.container}>
-            <div className={css.leftBox}>
-                {data.product_detail.img_urls?.map((item: any) => {
-                    return (
-                        <img src={item} key={item} alt="" width={628} height={628} className={css.imgItem}/>
-                    )
-                })}
-            </div>
+            <Hidden smDown>
+                <div className={css.leftBox}>
+                    {data.product_detail.img_urls?.map((item: any) => {
+                        return (
+                            <img src={item} key={item} alt="" width={628} height={628} className={css.imgItem}/>
+                        )
+                    })}
+                </div>
+            </Hidden>
             <div className={css.rightBox}>
                 <div className={css.menuName}>首頁 / {data.product_detail.brand.name} /
                     <span className={'bold'}>{data.product_detail.name}</span></div>
+                <Hidden smUp>
+                    <div>
+                        <img src={data.product_detail.main_img_url} alt="" className={css.imgItem}/>
+                    </div>
+                </Hidden>
                 <div className={css.productName}>{data.product_detail.name}</div>
                 <div className={css.num000}>0000000000</div>
                 <div className={css.brandName}>Brand品牌｜{data.product_detail.brand.name}</div>
@@ -205,6 +212,13 @@ let Brand = observer(() => {
                 <div className={css.prodDescTitle}>商品簡介</div>
                 <div className={css.line}></div>
                 <div className={css.prodDesc}>{data.product_detail.detail}</div>
+                <Hidden smUp>
+                    {data.product_detail.img_urls?.map((item: any) => {
+                        return (
+                            <img src={item} key={item} alt="" width={628} height={628} className={css.imgItem}/>
+                        )
+                    })}
+                </Hidden>
             </div>
         </div>
     )
