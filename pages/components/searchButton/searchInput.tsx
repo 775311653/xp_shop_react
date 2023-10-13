@@ -1,29 +1,10 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import {observable} from "mobx";
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
 import {useLocalObservable} from 'mobx-react-lite';
-
-
-import {useHistory, useLocation} from "react-router-dom";
-import {useEffect} from "react";
-import {useRouter} from 'next/router';
-import api from "@/api";
 import css from './searchInput.module.scss';
-import cartPng from '@/public/brand/cart.png';
-import Image from "next/image";
-
-interface NumberInputProps {
-    onChange?: (value: number) => void;
-    defaultValue?: number;
-}
-
-let commonUtils = require("@/utils/Common.js");
-let queryParams = {};
-let history;
-let router;
 
 // @ts-ignore
 const SearchInput = observer(({onSearchInput}) => {
@@ -36,8 +17,8 @@ const SearchInput = observer(({onSearchInput}) => {
         data.inputValue = value;
     };
 
-    const handleSearch = () => {
-        if (onSearchInput) {
+    const handleSearch = (event: any) => {
+        if (event.key === "Enter" && onSearchInput) {
             onSearchInput(data.inputValue);
         }
     };
@@ -47,15 +28,21 @@ const SearchInput = observer(({onSearchInput}) => {
             <TextField
                 value={data.inputValue}
                 onChange={handleInputChange}
-                placeholder="Search..."
+                onKeyDown={handleSearch}
+                placeholder="搜尋..."
+                variant="outlined"
+                fullWidth
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <SearchIcon/>
+                        </InputAdornment>
+                    ),
+                    style: {
+                        borderRadius: '50px', // This will make the text field oval-shaped
+                    },
+                }}
             />
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSearch}
-            >
-                Search
-            </Button>
         </div>
     );
 });
