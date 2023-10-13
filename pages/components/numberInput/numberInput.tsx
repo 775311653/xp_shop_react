@@ -69,7 +69,6 @@ const NumberInput: React.FC<NumberInputProps> = observer(({onChange, defaultValu
                 value={data.value}
                 inputProps={{
                     min: 1,
-                    max: 999,
                 }}
                 onChange={e => handleValueChange(Number(e.target.value))}
                 defaultValue={defaultValue}
