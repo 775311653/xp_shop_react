@@ -46,6 +46,41 @@
         text-decoration: line-through;
       }
     }
+
+    .addCartBox {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+
+      .cartBox {
+        display: flex;
+        border-radius: 3px;
+        border: 1px solid var(--gray-400-border, #C1CDD7);
+        background: var(--gray-white, #FFF);
+        align-items: center;
+        flex-grow: 1;
+        justify-content: center;
+        height: 32px;
+
+        .imgCart {
+          width: 20px;
+          height: 20px;
+          margin-right: 2px;
+        }
+
+        .addStr {
+          color: var(--gray-800-paragraph, #373F50);
+          line-height: 20px; /* 142.857% */
+          letter-spacing: 0.7px;
+        }
+      }
+
+      .favoriteIcon {
+        margin-left: 8px;
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 }
 

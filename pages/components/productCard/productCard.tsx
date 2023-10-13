@@ -7,6 +7,8 @@ import {useLocalObservable} from 'mobx-react-lite';
 import css from './productCard.module.scss';
 import {Card, Hidden} from "_@mui_material@5.14.13@@mui/material";
 import {useRouter} from "next/router";
+import Image from "next/image";
+import {FavoriteBorder} from "@mui/icons-material";
 
 // @ts-ignore
 const ProductCard = observer(({productData, className = ''}) => {
@@ -36,6 +38,13 @@ const ProductCard = observer(({productData, className = ''}) => {
                             <span className={css.rawPrice}>NT${data.product.raw_price}</span>
                         ) : null
                     }
+                </div>
+                <div className={css.addCartBox}>
+                    <div className={css.cartBox}>
+                        <Image src={'/brand/cart.png'} alt="" width={20} height={20} className={css.imgCart}/>
+                        <div className={css.addStr}>加入</div>
+                    </div>
+                    <FavoriteBorder className={css.favoriteIcon}/>
                 </div>
             </div>
         </Card>
