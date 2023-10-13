@@ -7,7 +7,8 @@ import {useRouter} from 'next/router';
 import api from "@/api";
 import css from './brand.module.scss';
 import Image from "next/image";
-import {Card} from "@mui/material";
+import {Card, Hidden} from "@mui/material";
+import SearchInput from "@/pages/components/searchButton/searchInput";
 
 let commonUtils = require("@/utils/Common.js");
 let queryParams: any = {
@@ -29,8 +30,11 @@ async function get_shop_cart_list() {
     data.cart_total = res.result.total;
 }
 
-async function get_product_list() {
-    let res = await api.product.get_product_list({brand_id: queryParams.id});
+async function get_product_list(params: any = {}) {
+    if (!queryParams.id) {
+        params.brand_id = queryParams.id;
+    }
+    let res = await api.product.get_product_list(params);
     if (res.code !== 0) return;
 
     data.product_list = res.result.data;
@@ -48,16 +52,23 @@ let Brand = observer(() => {
     // console.log(JSON.parse(JSON.stringify(router)));
 
     useEffect(() => {
-         init(queryParams);
+        init(queryParams);
     }, [queryParams.id]);
 
     return (
         <div className={css.container}>
-            <div className={css.topBox}>
-                <div className={css.titleBox}><span className={css.title}>首页</span>/</div>
-            </div>
-            <Image src={'/brand/banner.png'} alt="" width={1440} height={400} className={css.banner}
-                   objectFit={'scale-down'}/>
+            <Hidden smDown>
+                <div className={css.topBox}>
+                    <div className={css.titleBox}><span className={css.title}>首页</span>/</div>
+                </div>
+                <Image src={'/brand/banner.png'} alt="" width={1440} height={400} className={css.banner}
+                       objectFit={'scale-down'}/>
+            </Hidden>
+            <Hidden mdUp>
+                <SearchInput onSearchInput={(searchStr: any) => {
+                    get_product_list({product_name: searchStr})
+                }}/>
+            </Hidden>
             <div className={css.productListBox}>
                 {
                     data.product_list.map((item: any, index) => {
