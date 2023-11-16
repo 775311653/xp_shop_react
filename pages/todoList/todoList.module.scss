@@ -4,13 +4,14 @@
   background: #F8F8F8;
   overflow-y: scroll;
   height: 100vh;
+
   .topFade {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 89px;
-    background-image: linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0));
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
   }
 
   .bottomFade {
@@ -19,7 +20,56 @@
     left: 0;
     right: 0;
     height: 224px;
-    background-image: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0));
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+
+
+    .addFormBox {
+      position: absolute;
+      bottom: 49px;
+      left: calc(50% - 227.5px);
+      //right: 0;
+      background: white;
+      width: 455px;
+      height: 331px;
+      display: flex;
+      flex-direction: column;
+      padding: 41px;
+
+      .inputText {
+        margin-bottom: 14px;
+      }
+
+      .levelBox {
+        display: flex;
+        gap: 18px;
+
+        .levelItem {
+          width: 35px;
+          height: 35px;
+        }
+      }
+    }
+  }
+
+  .addButton {
+    position: absolute;
+    bottom: 49px;
+    left: 50%;
+    right: 0;
+  }
+
+  .smallClose {
+    position: absolute;
+    bottom: 49px;
+    left: 48%;
+    right: 0;
+  }
+
+  .smallRight {
+    position: absolute;
+    bottom: 49px;
+    left: 52%;
+    right: 0;
   }
 
   .topTitle {
@@ -63,6 +113,7 @@
       max-width: 445px;
       margin: auto;
       gap: 34px;
+      padding-bottom: 150px;
 
       .todoItem {
         display: flex;
@@ -95,7 +146,7 @@
           margin: 12px 0;
         }
 
-        .tagsBox{
+        .tagsBox {
           display: flex;
           gap: 12px;
         }

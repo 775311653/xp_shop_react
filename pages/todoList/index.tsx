@@ -15,7 +15,7 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    Hidden,
+    Hidden, Popover,
     Stack, ToggleButton,
     ToggleButtonGroup
 } from "@mui/material";
@@ -233,76 +233,86 @@ let TodoList = observer(() => {
                 </div>
 
             </DndProvider>
-            <div className={css.bottomFade}></div>
-            <div>
-                {
-                    !data.is_show_add_todo_item_dialog ? (
-                        <div className={css.closeImg} onClick={() => {
-                            data.is_show_add_todo_item_dialog = true;
-                        }}>
-                            <Image src={'/todoList/add_icon.png'} alt="" width={16} height={16}/>
-                        </div>
-                    ) : null
-                }
+            <div className={css.bottomFade}>
+
+                <div>
+                    {
+                        !data.is_show_add_todo_item_dialog ? (
+                            <div className={css.addButton} onClick={() => {
+                                data.is_show_add_todo_item_dialog = true;
+                            }}>
+                                <Image src={'/todoList/add_icon.png'} alt="" width={36} height={36}/>
+                            </div>
+                        ) : (
+                            <>
+                                <Card className={css.addFormBox}>
+                                    <TextField label="Take dog out on walk"
+                                               className={css.inputText}
+                                               value={data.form_todo_item.title} onChange={(e) => {
+                                        data.form_todo_item.title = e.target.value;
+                                    }}/>
+                                    <TextField label="He needs vaccine shot too"
+                                               className={css.inputText}
+                                               value={data.form_todo_item.content} onChange={(e) => {
+                                        data.form_todo_item.content = e.target.value;
+                                    }}/>
+                                    <TextField label="tags"
+                                               className={css.inputText}
+                                               value={data.form_todo_item.tags} onChange={(e) => {
+                                        //用逗号或者空格分割
+                                        let tags = e.target.value.split(/[, ]+/);
+                                        data.form_todo_item.tags = tags;
+                                    }}/>
+                                    <ToggleButtonGroup
+                                        value={data.form_todo_item.level}
+                                        exclusive
+                                        onChange={(e, value) => {
+                                            data.form_todo_item.level = value;
+                                        }}
+                                        className={css.levelBox}
+                                        aria-label="text alignment"
+                                    >
+                                        <ToggleButton value="1"
+                                                      className={css.levelItem}
+                                                      aria-label="left aligned">
+                                            1
+                                        </ToggleButton>
+                                        <ToggleButton value="2"
+                                                      className={css.levelItem}
+                                                      aria-label="centered">
+                                            2
+                                        </ToggleButton>
+                                        <ToggleButton value="3"
+                                                      className={css.levelItem}
+                                                      aria-label="right aligned">
+                                            3
+                                        </ToggleButton>
+                                        <ToggleButton value="4"
+                                                      className={css.levelItem}
+                                                      aria-label="justified">
+                                            4
+                                        </ToggleButton>
+                                    </ToggleButtonGroup>
+                                </Card>
+                                <div>
+                                    <div className={css.smallClose} onClick={() => {
+                                        data.is_show_add_todo_item_dialog = false;
+                                    }}>
+                                        <Image src={'/todoList/add_icon.png'} alt="" width={36} height={36}/>
+                                    </div>
+                                    <div className={css.smallRight} onClick={() => {
+                                        addTodoItem();
+                                    }}>
+                                        <Image src={'/todoList/right_icon.png'} alt="" width={36} height={36}/>
+                                    </div>
+                                </div>
+                            </>
+                        )
+                    }
+
+                </div>
             </div>
 
-            <Dialog open={data.is_show_add_todo_item_dialog}>
-                <DialogTitle>add info</DialogTitle>
-                <DialogContent>
-                    <TextField label="title"
-                               placeholder="Take dog out on walk"
-                               value={data.form_todo_item.title} onChange={(e) => {
-                        data.form_todo_item.title = e.target.value;
-                    }}/>
-                    <TextField label="content"
-                               placeholder="He needs vaccine shot too"
-                               value={data.form_todo_item.content} onChange={(e) => {
-                        data.form_todo_item.content = e.target.value;
-                    }}/>
-                    <TextField label="tags"
-                               placeholder="Tags"
-                               value={data.form_todo_item.tags} onChange={(e) => {
-                        //用逗号或者空格分割
-                        let tags = e.target.value.split(/[, ]+/);
-                        data.form_todo_item.tags = tags;
-                    }}/>
-                    <div>
-                        <ToggleButtonGroup
-                            value={data.form_todo_item.level}
-                            exclusive
-                            onChange={(e, value) => {
-                                data.form_todo_item.level = value;
-                            }}
-                            aria-label="text alignment"
-                        >
-                            <ToggleButton value="1" aria-label="left aligned">
-                                1
-                            </ToggleButton>
-                            <ToggleButton value="2" aria-label="centered">
-                                2
-                            </ToggleButton>
-                            <ToggleButton value="3" aria-label="right aligned">
-                                3
-                            </ToggleButton>
-                            <ToggleButton value="4" aria-label="justified">
-                                4
-                            </ToggleButton>
-                        </ToggleButtonGroup>
-                    </div>
-                </DialogContent>
-                <DialogActions>
-                    <div className={css.closeImg} onClick={() => {
-                        data.is_show_add_todo_item_dialog = false;
-                    }}>
-                        <Image src={'/todoList/small_close.svg'} alt="" width={16} height={16}/>
-                    </div>
-                    <div className={css.closeImg} onClick={() => {
-                        addTodoItem();
-                    }}>
-                        <Image src={'/todoList/small_right.svg'} alt="" width={16} height={16}/>
-                    </div>
-                </DialogActions>
-            </Dialog>
         </div>
     )
 });
