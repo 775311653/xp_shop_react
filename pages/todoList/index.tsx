@@ -140,13 +140,13 @@ const DraggableCard = ({item, onDrop, children}: any) => {
 };
 
 // Drop 区域
-const DropZone = ({name, onDrop, children}: any) => {
+const DropZone = ({name, onDrop, children, className}: any) => {
     const [, dropRef] = useDrop({
         accept: 'CARD',
         drop: onDrop,
     });
 
-    return <div ref={dropRef}>{children}</div>;
+    return <div ref={dropRef} className={className}>{children}</div>;
 };
 
 
@@ -162,6 +162,7 @@ let TodoList = observer(() => {
 
     return (
         <div className={css.container}>
+            <div className={css.topFade}></div>
             <div className={css.topTitle}>Daily Todo</div>
 
             <DndProvider backend={HTML5Backend}>
@@ -232,6 +233,7 @@ let TodoList = observer(() => {
                 </div>
 
             </DndProvider>
+            <div className={css.bottomFade}></div>
             <div>
                 {
                     !data.is_show_add_todo_item_dialog ? (
