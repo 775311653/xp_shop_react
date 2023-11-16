@@ -5,7 +5,7 @@ import {useHistory, useLocation} from "react-router-dom";
 import {useEffect} from "react";
 import {useRouter} from 'next/router';
 import api from "@/api";
-import css from './shopCart.module.scss';
+import css from './todoList.module.scss';
 import Image from "next/image";
 import {
     Button,
@@ -62,11 +62,12 @@ async function addTodoItem() {
     if (commonUtils.isEmpty(data.form_todo_item.title)
         || commonUtils.isEmpty(data.form_todo_item.content)
         || commonUtils.isEmpty(data.form_todo_item.tags)) {
-        Message.error("请填写完整");
+        // Message.error("请填写完整");
+        Message.error("please fill in the form");
         return;
     }
     data.todo_list.push(data.form_todo_item);
-    message.success("添加成功");
+    message.success("add success");
     data.is_show_add_todo_item_dialog = false;
 }
 
@@ -74,22 +75,22 @@ async function addTodoItem() {
 async function deleteTodoItem() {
     let index = data.todo_list.indexOf(data.choose_item);
     if (index === -1) {
-        message.error("请选择要删除的项");
+        message.error("please choose item");
         return;
     }
     data.todo_list.splice(index, 1);
-    message.success("删除成功");
+    message.success("delete success");
 }
 
 //修改todoItem
 async function updateTodoItem(params: any) {
     let index = data.todo_list.indexOf(data.choose_item);
     if (index === -1) {
-        message.error("请选择要修改的项");
+        message.error("please choose item");
         return;
     }
     data.todo_list[index] = params;
-    message.success("修改成功");
+    message.success("update success");
 }
 
 function get_level_color(level: number): any {
@@ -131,59 +132,69 @@ let TodoList = observer(() => {
 
     return (
         <div className={css.container}>
-            <div>Daily Todo</div>
+            <div className={css.topTitle}>Daily Todo</div>
 
-            <div>
+            <div className={css.middleBox}>
                 {
-                    !commonUtils.isEmpty(data.choose_item) ? (
-                        <div className={css.closeImg} onClick={() => {
+                    !commonUtils.isEmpty(data.choose_item?.title) ? (
+                        <div className={css.leftDeleteIcon} onClick={() => {
                             deleteTodoItem();
                         }}>
-                            <Image src={'/todoList/delete_icon.png'} alt="" width={16} height={16}/>
+                            <Image src={'/todoList/delete_icon.png'} alt="" width={129} height={129}/>
                         </div>
                     ) : null
                 }
-                {
-                    data.todo_list.map((item: any, index: number) => {
-                        return (
-                            <Card key={index}
-                                  onMouseEnter={() => {
-                                      data.choose_item = item;
-                                  }}
-                                  onMouseLeave={() => {
-                                      data.choose_item = null;
-                                  }}
-                                  style={{
-                                      transform: data.todo_list.indexOf(data.choose_item) === index ? 'scale(1.1)' : 'scale(1)',
-                                      transition: 'transform 0.3s'
-                                  }}
-                            >
-                                <div>{item.title}</div>
-                                <div>{item.content}</div>
-                                <div>
-                                    <Chip label={item.level} color={get_level_color(item.level)}/>
-                                    <Stack direction="row" spacing={1}>
-                                        {
-                                            item.tags.map((tag: string, index: number) => {
-                                                return (
-                                                    <Chip label={tag} key={index} color="success"/>
-                                                )
-                                            })
-                                        }
-                                    </Stack>
+                <div className={css.todoListBox}>
+                    {
+                        data.todo_list.map((item: any, index: number) => {
+                            return (
+                                <Card key={index}
+                                      className={css.todoItem}
+                                      onMouseEnter={() => {
+                                          data.choose_item = item;
+                                      }}
+                                      onClick={() => {
+                                            if (commonUtils.isEmpty(data.choose_item?.title)) {
+                                                data.choose_item = item;
+                                            } else {
+                                                data.choose_item = null;
+                                            }
+                                      }}
+                                      // onMouseLeave={() => {
+                                      //     data.choose_item = null;
+                                      // }}
+                                      style={{
+                                          transform: data.todo_list.indexOf(data.choose_item) === index ? 'scale(1.1)' : 'scale(1)',
+                                          transition: 'transform 0.3s'
+                                      }}
+                                >
+                                    <div className={css.title}>{item.title}</div>
+                                    <div className={css.content}>{item.content}</div>
+                                    <div className={css.tagsBox}>
+                                        <Chip label={item.level} color={get_level_color(item.level)}/>
+                                        <Stack direction="row" spacing={1}>
+                                            {
+                                                item.tags.map((tag: string, index: number) => {
+                                                    return (
+                                                        <Chip label={tag} key={index} color="success"/>
+                                                    )
+                                                })
+                                            }
+                                        </Stack>
 
-                                    <div>{item.is_done ? 'done' : 'not done'}</div>
-                                </div>
-                            </Card>
-                        )
-                    })
-                }
+                                        <div>{item.is_done ? 'done' : 'not done'}</div>
+                                    </div>
+                                </Card>
+                            )
+                        })
+                    }
+                </div>
                 {
-                    !commonUtils.isEmpty(data.choose_item) ? (
-                        <div className={css.closeImg} onClick={() => {
+                    !commonUtils.isEmpty(data.choose_item?.title) ? (
+                        <div className={css.rightIcon} onClick={() => {
                             updateTodoItem({is_done: !data.choose_item.is_done});
                         }}>
-                            <Image src={'/todoList/right_icon.png'} alt="" width={16} height={16}/>
+                            <Image src={'/todoList/right_icon.png'} alt="" width={129} height={129}/>
                         </div>
                     ) : null
                 }
@@ -201,19 +212,19 @@ let TodoList = observer(() => {
             </div>
 
             <Dialog open={data.is_show_add_todo_item_dialog}>
-                <DialogTitle>填写信息</DialogTitle>
+                <DialogTitle>add info</DialogTitle>
                 <DialogContent>
-                    <TextField label="标题"
+                    <TextField label="title"
                                placeholder="Take dog out on walk"
                                value={data.form_todo_item.title} onChange={(e) => {
                         data.form_todo_item.title = e.target.value;
                     }}/>
-                    <TextField label="内容"
+                    <TextField label="content"
                                placeholder="He needs vaccine shot too"
                                value={data.form_todo_item.content} onChange={(e) => {
                         data.form_todo_item.content = e.target.value;
                     }}/>
-                    <TextField label="标签"
+                    <TextField label="tags"
                                placeholder="Tags"
                                value={data.form_todo_item.tags} onChange={(e) => {
                         //用逗号或者空格分割

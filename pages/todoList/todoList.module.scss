@@ -1,0 +1,86 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background: #F8F8F8;
+
+  .topTitle {
+    color: var(--tailwind-slate-200, #E2E8F0);
+    /* text-7xl/black */
+    font-family: Inter;
+    font-size: 72px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    margin: auto;
+  }
+
+  .middleBox {
+    display: flex;
+    flex-direction: row;
+
+    .leftDeleteIcon {
+      margin: auto;
+      padding: 0 10px;
+      max-width: 129px;
+    }
+
+    .todoListBox {
+      display: flex;
+      flex-direction: column;
+      max-width: 445px;
+      margin: auto;
+      gap: 34px;
+
+      .todoItem {
+        display: flex;
+        flex-direction: column;
+        padding: 26px 34px;
+
+        .title {
+          color: var(--tailwind-gray-700, #374151);
+
+          /* text-2xl/extra bold */
+          font-family: Inter;
+          font-size: 24px;
+          font-style: normal;
+          font-weight: 800;
+          line-height: normal;
+        }
+
+        .content {
+          overflow: hidden;
+          color: var(--tailwind-gray-500, #6B7280);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          /* text-base/medium */
+          font-family: Inter;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+          margin: 12px 0;
+        }
+
+        .tagsBox{
+          display: flex;
+          gap: 12px;
+        }
+      }
+    }
+
+    .rightIcon {
+      margin: auto;
+      padding: 0 10px;
+      max-width: 129px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    padding: 0 10px;
+  }
+}
+
+
