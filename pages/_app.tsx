@@ -32,9 +32,9 @@ const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
             <ThemeProvider theme={lightTheme}>
                 <CssBaseline/>
                 <div className={css.appContainer}>
-                    <Header/>
+                    {/*<Header/>*/}
                     <Component {...pageProps} />
-                    <Footer/>
+                    {/*<Footer/>*/}
                 </div>
                 <Message.Component/>
             </ThemeProvider>
