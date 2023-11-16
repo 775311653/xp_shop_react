@@ -132,12 +132,15 @@
         }
 
         .content {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2; /* 限制文本的行数为两行 */
           overflow: hidden;
-          color: var(--tailwind-gray-500, #6B7280);
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          text-overflow: ellipsis; /* 当文本溢出时显示省略号 */
+          white-space: normal; /* 允许文本换行 */
 
-          /* text-base/medium */
+          /* 其他样式保持不变 */
+          color: var(--tailwind-gray-500, #6B7280);
           font-family: Inter;
           font-size: 16px;
           font-style: normal;
@@ -145,6 +148,7 @@
           line-height: normal;
           margin: 12px 0;
         }
+
 
         .tagsBox {
           display: flex;

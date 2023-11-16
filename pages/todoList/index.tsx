@@ -115,7 +115,7 @@ function init(queryParams: {}) {
             title: 'Lorem ipsum dolor',
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
             tags: ['Health', 'Life'],
-            level: 1,
+            level: Math.floor(Math.random() * 4) + 1,
             is_done: false,
         });
     }
@@ -202,7 +202,7 @@ let TodoList = observer(() => {
                                             <div className={css.title}>{item.title}</div>
                                             <div className={css.content}>{item.content}</div>
                                             <div className={css.tagsBox}>
-                                                <Chip label={item.level} color={get_level_color(item.level)}/>
+                                                <Chip label={'p' + item.level} color={get_level_color(item.level)}/>
                                                 <Stack direction="row" spacing={1}>
                                                     {
                                                         item.tags?.map((tag: string, index: number) => {
@@ -213,7 +213,7 @@ let TodoList = observer(() => {
                                                     }
                                                 </Stack>
 
-                                                <div>{item.is_done ? 'done' : 'not done'}</div>
+                                                <div>{item.is_done ? 'done' : ''}</div>
                                             </div>
                                         </Card>
                                     </DraggableCard>
