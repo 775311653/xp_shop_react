@@ -23,8 +23,10 @@ import {Big} from "big.js";
 import NumberInput from "@/pages/components/numberInput/numberInput";
 import Message from "@/pages/components/message/message";
 import message from "@/pages/components/message/message";
-import {any} from "_@types_prop-types@15.7.8@@types/prop-types";
 import TextField from "@mui/material/TextField";
+import {DndProvider, useDrag, useDrop} from 'react-dnd';
+import {HTML5Backend} from "react-dnd-html5-backend";
+
 
 let commonUtils = require("@/utils/Common.js");
 let queryParams = {};
@@ -62,7 +64,6 @@ async function addTodoItem() {
     if (commonUtils.isEmpty(data.form_todo_item.title)
         || commonUtils.isEmpty(data.form_todo_item.content)
         || commonUtils.isEmpty(data.form_todo_item.tags)) {
-        // Message.error("请填写完整");
         Message.error("please fill in the form");
         return;
     }
@@ -89,7 +90,7 @@ async function updateTodoItem(params: any) {
         message.error("please choose item");
         return;
     }
-    data.todo_list[index] = params;
+    Object.assign(data.todo_list[index], params);
     message.success("update success");
 }
 
@@ -120,6 +121,35 @@ function init(queryParams: {}) {
     }
 }
 
+// 拖拽的 Card 组件
+const DraggableCard = ({item, onDrop, children}: any) => {
+    const [{isDragging}, dragRef] = useDrag({
+        type: 'CARD',
+        item,
+        end: (item, monitor) => {
+            const dropResult = monitor.getDropResult();
+            if (item && dropResult) {
+                // onDrop(item);
+            }
+        },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    });
+    return <div ref={dragRef}>{children}</div>;
+};
+
+// Drop 区域
+const DropZone = ({name, onDrop, children}: any) => {
+    const [, dropRef] = useDrop({
+        accept: 'CARD',
+        drop: onDrop,
+    });
+
+    return <div ref={dropRef}>{children}</div>;
+};
+
+
 let TodoList = observer(() => {
     history = useHistory();
     router = useRouter();
@@ -134,71 +164,74 @@ let TodoList = observer(() => {
         <div className={css.container}>
             <div className={css.topTitle}>Daily Todo</div>
 
-            <div className={css.middleBox}>
-                {
-                    !commonUtils.isEmpty(data.choose_item?.title) ? (
-                        <div className={css.leftDeleteIcon} onClick={() => {
-                            deleteTodoItem();
-                        }}>
-                            <Image src={'/todoList/delete_icon.png'} alt="" width={129} height={129}/>
-                        </div>
-                    ) : null
-                }
-                <div className={css.todoListBox}>
+            <DndProvider backend={HTML5Backend}>
+                <div className={css.middleBox}>
                     {
-                        data.todo_list.map((item: any, index: number) => {
-                            return (
-                                <Card key={index}
-                                      className={css.todoItem}
-                                      onMouseEnter={() => {
-                                          data.choose_item = item;
-                                      }}
-                                      onClick={() => {
-                                            if (commonUtils.isEmpty(data.choose_item?.title)) {
+                        !commonUtils.isEmpty(data.choose_item?.title) ? (
+                            <DropZone name="delete" onDrop={deleteTodoItem} className={css.leftDeleteIcon}>
+                                <Image src={'/todoList/delete_icon.png'} alt="" width={129} height={129}/>
+                            </DropZone>
+                        ) : null
+                    }
+                    <div className={css.todoListBox}>
+                        {
+                            data.todo_list.map((item: any, index: number) => {
+                                return (
+                                    <DraggableCard key={index} item={item}>
+                                        <Card
+                                            className={css.todoItem}
+                                            onMouseEnter={() => {
                                                 data.choose_item = item;
-                                            } else {
-                                                data.choose_item = null;
-                                            }
-                                      }}
-                                      // onMouseLeave={() => {
-                                      //     data.choose_item = null;
-                                      // }}
-                                      style={{
-                                          transform: data.todo_list.indexOf(data.choose_item) === index ? 'scale(1.1)' : 'scale(1)',
-                                          transition: 'transform 0.3s'
-                                      }}
-                                >
-                                    <div className={css.title}>{item.title}</div>
-                                    <div className={css.content}>{item.content}</div>
-                                    <div className={css.tagsBox}>
-                                        <Chip label={item.level} color={get_level_color(item.level)}/>
-                                        <Stack direction="row" spacing={1}>
-                                            {
-                                                item.tags.map((tag: string, index: number) => {
-                                                    return (
-                                                        <Chip label={tag} key={index} color="success"/>
-                                                    )
-                                                })
-                                            }
-                                        </Stack>
+                                            }}
+                                            onClick={() => {
+                                                if (commonUtils.isEmpty(data.choose_item?.title)) {
+                                                    data.choose_item = item;
+                                                } else {
+                                                    data.choose_item = null;
+                                                }
+                                            }}
+                                            // onMouseLeave={() => {
+                                            //     data.choose_item = null;
+                                            // }}
+                                            style={{
+                                                transform: data.todo_list.indexOf(data.choose_item) === index ? 'scale(1.1)' : 'scale(1)',
+                                                transition: 'transform 0.3s'
+                                            }}
+                                        >
+                                            <div className={css.title}>{item.title}</div>
+                                            <div className={css.content}>{item.content}</div>
+                                            <div className={css.tagsBox}>
+                                                <Chip label={item.level} color={get_level_color(item.level)}/>
+                                                <Stack direction="row" spacing={1}>
+                                                    {
+                                                        item.tags?.map((tag: string, index: number) => {
+                                                            return (
+                                                                <Chip label={tag} key={index} color="success"/>
+                                                            )
+                                                        })
+                                                    }
+                                                </Stack>
 
-                                        <div>{item.is_done ? 'done' : 'not done'}</div>
-                                    </div>
-                                </Card>
-                            )
-                        })
+                                                <div>{item.is_done ? 'done' : 'not done'}</div>
+                                            </div>
+                                        </Card>
+                                    </DraggableCard>
+                                )
+                            })
+                        }
+                    </div>
+                    {
+                        !commonUtils.isEmpty(data.choose_item?.title) ? (
+                            <DropZone name="complete" onDrop={() => {
+                                updateTodoItem({is_done: !data.choose_item.is_done})
+                            }} className={css.rightIcon}>
+                                <Image src={'/todoList/right_icon.png'} alt="" width={129} height={129}/>
+                            </DropZone>
+                        ) : null
                     }
                 </div>
-                {
-                    !commonUtils.isEmpty(data.choose_item?.title) ? (
-                        <div className={css.rightIcon} onClick={() => {
-                            updateTodoItem({is_done: !data.choose_item.is_done});
-                        }}>
-                            <Image src={'/todoList/right_icon.png'} alt="" width={129} height={129}/>
-                        </div>
-                    ) : null
-                }
-            </div>
+
+            </DndProvider>
             <div>
                 {
                     !data.is_show_add_todo_item_dialog ? (

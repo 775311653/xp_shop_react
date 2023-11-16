@@ -9,7 +9,7 @@ import css from './brand.module.scss';
 import Image from "next/image";
 import {Card, Hidden} from "@mui/material";
 import SearchInput from "@/pages/components/searchButton/searchInput";
-import {MenuItem, Select} from "_@mui_material@5.14.13@@mui/material";
+import {MenuItem, Select} from "@mui/material";
 
 let commonUtils = require("@/utils/Common.js");
 let queryParams: any = {

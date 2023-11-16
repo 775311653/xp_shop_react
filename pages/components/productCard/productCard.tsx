@@ -5,7 +5,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import {useLocalObservable} from 'mobx-react-lite';
 import css from './productCard.module.scss';
-import {Card, Hidden} from "_@mui_material@5.14.13@@mui/material";
+import {Card, Hidden} from '@mui/material';
 import {useRouter} from "next/router";
 import Image from "next/image";
 import {FavoriteBorder} from "@mui/icons-material";
